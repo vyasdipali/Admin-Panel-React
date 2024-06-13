@@ -153,7 +153,7 @@ function FixedPlugin({
               <img alt="..." src={sideBarImage4}></img>
             </a>
           </li>
-          {/* <li className="button-container">
+          <li className="button-container">
             <div>
               <Button
                 block
@@ -166,8 +166,8 @@ function FixedPlugin({
                 Download, it's free!
               </Button>
             </div>
-          </li> */}
-          {/* <li className="button-container">
+          </li>
+          <li className="button-container">
             <div>
               <Button
                 block
@@ -180,8 +180,8 @@ function FixedPlugin({
                 Checkout docs.
               </Button>
             </div>
-          </li> */}
-          {/* <li className="header-title pro-title text-center">
+          </li>
+          <li className="header-title pro-title text-center">
             Want more components?
           </li>
           <li className="button-container">
@@ -197,11 +197,11 @@ function FixedPlugin({
                 Get The PRO Version!
               </Button>
             </div>
-          </li> */}
-          {/* <li className="header-title" id="sharrreTitle">
+          </li>
+          <li className="header-title" id="sharrreTitle">
             Thank you for sharing!
-          </li> */}
-          {/* <li className="button-container mb-4">
+          </li>
+          <li className="button-container mb-4">
             <Button
               className="btn-social btn-outline btn-round sharrre"
               id="twitter"
@@ -216,7 +216,7 @@ function FixedPlugin({
             >
               <i className="fab fa-facebook-square"></i>· 426
             </Button>
-          </li> */}
+          </li>
         </Dropdown.Menu>
       </Dropdown>
     </div>
