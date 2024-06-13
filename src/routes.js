@@ -15,6 +15,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
+import CourseCategory from "views/CourseCategory/CourseCategory";
 import Dashboard from "views/Dashboard.js";
 // import Login from "views/Login/Login";
 // import UserProfile from "views/UserProfile.js";
@@ -46,6 +47,13 @@ const dashboardRoutes = [
     name: "Table List",
     icon: "nc-icon nc-notes",
     component: TableList,
+    layout: "/admin"
+  },
+  {
+    path: "/CourseCategory",
+    name: "Table List",
+    icon: "nc-icon nc-notes",
+    component: CourseCategory,
     layout: "/admin"
   },
   // {
