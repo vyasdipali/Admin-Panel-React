@@ -16,6 +16,7 @@
 
 */
 import Dashboard from "views/Dashboard.js";
+// import Login from "views/Login/Login";
 // import UserProfile from "views/UserProfile.js";
 import TableList from "views/TableList.js";
 // import Typography from "views/Typography.js";
@@ -47,6 +48,13 @@ const dashboardRoutes = [
     component: TableList,
     layout: "/admin"
   },
+  // {
+  //   path: "/Login",
+  //   name: "Table List",
+  //   icon: "nc-icon nc-notes",
+  //   component: Login,
+  //   layout: "/admin"
+  // },
   // {
   //   path: "/user",
   //   name: "User Profile",

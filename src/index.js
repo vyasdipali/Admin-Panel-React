@@ -1,23 +1,38 @@
-/*!
+// import React from "react";
+// import ReactDOM from "react-dom/client";
 
-=========================================================
-* Light Bootstrap Dashboard React - v2.0.1
-=========================================================
+// import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
-* Product Page: https://www.creative-tim.com/product/light-bootstrap-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/light-bootstrap-dashboard-react/blob/master/LICENSE.md)
+// import "bootstrap/dist/css/bootstrap.min.css";
+// import "./assets/css/animate.min.css";
+// import "./assets/scss/light-bootstrap-dashboard-react.scss?v=2.0.0";
+// import "./assets/css/demo.css";
+// import "@fortawesome/fontawesome-free/css/all.min.css";
 
-* Coded by Creative Tim
+// import AdminLayout from "layouts/Admin.js";
+// import Login from "components/Login/Login";
 
-=========================================================
 
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+// const root = ReactDOM.createRoot(document.getElementById("root"));
+// const token = sessionStorage.getItem('token');
 
-*/
+// root.render(
+//   <BrowserRouter>
+//     <Switch>
+//      <Route path="/Login" element={<Login />} />
+//       {token ? (
+//         <>
+//           <Route path="/admin/*" element={<AdminLayout />} />
+//           <Route path="/" element={<Navigate to="/admin/dashboard" replace />} />
+//         </>
+//       ) : (
+//         <Route path="/" element={<Navigate to="/Login" replace />} />
+//       )}
+//     </Switch>
+//   </BrowserRouter>
+// );
 import React from "react";
-import ReactDOM from "react-dom/client";
-
+import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -27,14 +42,27 @@ import "./assets/css/demo.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
 import AdminLayout from "layouts/Admin.js";
+import Login from "components/Login/Login";
+import { AuthProvider } from "AuthProvider ";
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+const token = sessionStorage.getItem('token');
 
 root.render(
   <BrowserRouter>
     <Switch>
-      <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
-      <Redirect from="/" to="/admin/dashboard" />
+      <Route path="/Login" component={Login} />
+      {token ? (
+        <>
+        <AuthProvider>
+          <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
+          <Redirect from="/" to="/admin/dashboard" />
+          </AuthProvider>
+        </>
+      ) : (
+        <Redirect from="/" to="/Login" />
+      )}
     </Switch>
   </BrowserRouter>
 );
