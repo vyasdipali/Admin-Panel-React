@@ -1,3 +1,10 @@
-.delete-btn{
-    margin: 0 15px;
+.delete-btn {
+  margin: 0 15px;
+}
+.modal .modal-content .modal-header {
+  border-bottom: 2px solid #888888;
+  padding-top: 0px;
+  padding-right: 24px;
+  padding-bottom: 0;
+  padding-left: 24px;
 }

@@ -607,7 +607,7 @@ body > .navbar-collapse {
 .modal.modal-mini .modal-dialog {
   max-width: 255px;
   margin: 0 auto; }
-
+/* 
 .modal .modal-content .modal-header {
   border-bottom: none;
   padding-top: 24px;
@@ -623,7 +623,7 @@ body > .navbar-collapse {
     box-shadow: 0px 5px 20px 0px rgba(0, 0, 0, 0.3); }
     .modal .modal-content .modal-header .modal-profile i {
       font-size: 32px;
-      padding-top: 24px; }
+      padding-top: 24px; } */
 
 .modal .modal-content .modal-body {
   padding-top: 24px;

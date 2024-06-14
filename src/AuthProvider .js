@@ -4,6 +4,7 @@
   const AuthContext = createContext();
 
   export const AuthProvider = ({ children }) => {
+
     const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
     const retrievedToken = sessionStorage.getItem('token');
 
@@ -23,3 +24,7 @@
   };
 
   export const useAuth = () => useContext(AuthContext);
+  
+
+
+
