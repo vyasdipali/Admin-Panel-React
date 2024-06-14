@@ -1,5 +1,17 @@
 import axiosInstance from "../axiosInstance";
 
+
+
+const courseData  = () => ({
+  courseCategoryID: 0,
+  courseCategoryName: "",
+  courseCategoryImage: "",
+  isFeatured: false, 
+});
+
+export default courseData ;
+
+
 const getAllCourseCategories = async () => {
   try {
     const response = await axiosInstance.get("Admin/GetAllAdminCourseCategory");
@@ -13,7 +25,7 @@ const addCourseCategory = async (courseCategoryName, courseCategoryImage) => {
   try {
     const response = await axiosInstance.post("Course/AddCourseCategory", {
       courseCategoryName,
-      courseCategoryImage
+      courseCategoryImage,
     });
     return response.data.data;
   } catch (error) {
@@ -21,11 +33,9 @@ const addCourseCategory = async (courseCategoryName, courseCategoryImage) => {
   }
 };
 
-const deleteCourseCategory = async (courseCategoryID
-) => {
+const deleteCourseCategory = async (courseCategoryID) => {
   try {
-    const response = await axiosInstance.post(`Course/DeleteCourseCategoryByID/${courseCategoryID
-}`);
+    const response = await axiosInstance.post(`Course/DeleteCourseCategoryByID/${courseCategoryID}`);
     console.log("DeleteCourseCategory Response:", response);
     return response.data.data;
   } catch (error) {
@@ -34,18 +44,18 @@ const deleteCourseCategory = async (courseCategoryID
   }
 };
 
-
-
-const updateCourseCategory = async (courseCategoryName, courseCategoryImage) => {
+const updateCourseCategory = async (courseData) => {
   try {
-    const response = await axiosInstance.post("Course/UpdateCourseCategory", {
-      courseCategoryName,
-      courseCategoryImage
-    });
+    const response = await axiosInstance.post("Course/UpdateCourseCategory", courseData);
     return response.data.data;
   } catch (error) {
-    throw new Error("Failed to add course category. Please try again.");
+    throw new Error("Failed to update course category. Please try again.");
   }
 };
 
-export { getAllCourseCategories, addCourseCategory, deleteCourseCategory,updateCourseCategory };
+export {
+  getAllCourseCategories,
+  addCourseCategory,
+  deleteCourseCategory,
+  updateCourseCategory,
+};

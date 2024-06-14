@@ -6,6 +6,7 @@ import {
     getAllCourseCategories,
     addCourseCategory,
     deleteCourseCategory,
+    updateCourseCategory,
 } from "../../utility/services/courseCategoryService";
 import "./CourseCategory.css";
 import { useAuth } from "AuthProvider ";
@@ -16,11 +17,20 @@ const CourseCategory = () => {
     const [error, setError] = useState(null);
     const [show, setShow] = useState(false);
     const [formValues, setFormValues] = useState({
+        courseCategoryID: null, // Add courseCategoryID to track for editing
         courseCategoryName: "",
         courseCategoryImage: "",
     });
 
-    const handleClose = () => setShow(false);
+    const handleClose = () => {
+        setShow(false);
+        setFormValues({
+            courseCategoryID: null,
+            courseCategoryName: "",
+            courseCategoryImage: "",
+        });
+    };
+
     const handleShow = () => setShow(true);
 
     const handleChange = (e) => {
@@ -34,34 +44,49 @@ const CourseCategory = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const newCategory = await addCourseCategory(
-                formValues.courseCategoryName,
-                formValues.courseCategoryImage
-            );
-            console.log("AddCourseCategory Response:", newCategory);
-            setData([...data, newCategory]);
-            setFormValues({
-                courseCategoryName: "",
-                courseCategoryImage: "",
-            });
-            setShow(false);
+            if (formValues.courseCategoryID) {
+                // If courseCategoryID exists, update category
+                const updatedCategory = await updateCourseCategory(formValues);
+                const updatedData = data.map((category) =>
+                    category.courseCategoryID === updatedCategory.courseCategoryID
+                        ? updatedCategory
+                        : category
+                );
+                setData(updatedData);
+                console.log("UpdateCourseCategory Response:", updatedCategory);
+            } else {
+                // Otherwise, add new category
+                const newCategory = await addCourseCategory(
+                    formValues.courseCategoryName,
+                    formValues.courseCategoryImage
+                );
+                setData([...data, newCategory]);
+                console.log("AddCourseCategory Response:", newCategory);
+            }
+            handleClose();
         } catch (error) {
             setError(error.message);
-            console.error("AddCourseCategory Error:", error);
+            console.error("Add/Update Course Category Error:", error);
         }
     };
 
-    const handleDelete = async (courseCategoryID
-    ) => {
+    const handleDelete = async (courseCategoryID) => {
         try {
             await deleteCourseCategory(courseCategoryID);
-            setData(data.filter((category) => category.courseCategoryID
-                !== courseCategoryID
-            ));
+            setData(data.filter((category) => category.courseCategoryID !== courseCategoryID));
         } catch (error) {
             setError(error.message);
             console.error("DeleteCourseCategory Error:", error);
         }
+    };
+
+    const handleEdit = (category) => {
+        setFormValues({
+            courseCategoryID: category.courseCategoryID,
+            courseCategoryName: category.courseCategoryName,
+            courseCategoryImage: category.courseCategoryImage,
+        });
+        handleShow();
     };
 
     useEffect(() => {
@@ -111,8 +136,7 @@ const CourseCategory = () => {
 
                 <Row>
                     {data.map((category) => (
-                        <Col key={category.courseCategoryID
-                        } sm={12} md={6} lg={4} xl={3}>
+                        <Col key={category.courseCategoryID} sm={12} md={6} lg={4} xl={3}>
                             <Card>
                                 <Card.Img
                                     variant="top"
@@ -129,7 +153,11 @@ const CourseCategory = () => {
                                     <Card.Text>
                                         {category.isFeatured ? "Featured Category" : "Regular Category"}
                                     </Card.Text>
-                                    <Button className="me-3" variant="primary">
+                                    <Button
+                                        className="me-3"
+                                        variant="primary"
+                                        onClick={() => handleEdit(category)}
+                                    >
                                         Edit
                                     </Button>
                                     <Button
@@ -148,7 +176,7 @@ const CourseCategory = () => {
 
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header>
-                    <Modal.Title>Add Course Category</Modal.Title>
+                    <Modal.Title>{formValues.courseCategoryID ? 'Edit' : 'Add'} Course Category</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <form onSubmit={handleSubmit}>
