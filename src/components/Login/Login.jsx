@@ -65,19 +65,7 @@ const Login = () => {
                                         <div className="login-btn mb-3">
                                             <button id="login" className="login-button" type="submit"> Login 📫 </button>  
                                         </div>
-                                    </form> <form onSubmit={handleSubmit}>
-                                        <div className="mb-3 d-flex flex-wrap align-items-center">
-                                            <label htmlFor="" className='form-label'>Email</label>
-                                            <input type="email" className='form-control' placeholder='Enter Your Email' name="email" value={data.email} onChange={handleChange}  required aria-invalid="false" />
-                                        </div>
-                                        <div className="mb-3 mb-3 d-flex flex-wrap align-items-center">
-                                            <label htmlFor="" className='form-label'>Password</label>
-                                            <input type="password" className='form-control' placeholder='Enter your password' name="password" value={data.password} onChange={handleChange} required aria-invalid="false" />
-                                        </div>
-                                        <div className="login-btn mb-3">
-                                            <button id="login" className="login-button" type="submit"> Login 📫 </button>  
-                                        </div>
-                                    </form>
+                                    </form> 
                                 </div>
                             </div>
                         </div>
