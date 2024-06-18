@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card, Container, Row, Col } from "react-bootstrap";
+import { Card, Container, Row, Col, ToastContainer } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import {
@@ -10,12 +10,15 @@ import {
 } from "../../utility/services/courseCategoryService";
 import "./CourseCategory.css";
 import { useAuth } from "AuthProvider ";
+import Loader from "components/Loader/Loader";
+
 
 const CourseCategory = () => {
     const { retrievedToken } = useAuth();
     const [data, setData] = useState([]);
     const [error, setError] = useState(null);
     const [show, setShow] = useState(false);
+    const [loading, setLoading] = useState(true); // State for loading
     const [formValues, setFormValues] = useState({
         courseCategoryID: null, // Add courseCategoryID to track for editing
         courseCategoryName: "",
@@ -43,6 +46,7 @@ const CourseCategory = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true); // Start loading when submitting
         try {
             if (formValues.courseCategoryID) {
                 // If courseCategoryID exists, update category
@@ -53,6 +57,7 @@ const CourseCategory = () => {
                         : category
                 );
                 setData(updatedData);
+                toast.success("Course category updated successfully!");
                 console.log("UpdateCourseCategory Response:", updatedCategory);
             } else {
                 // Otherwise, add new category
@@ -61,22 +66,31 @@ const CourseCategory = () => {
                     formValues.courseCategoryImage
                 );
                 setData([...data, newCategory]);
+                toast.success("Course category added successfully!");
                 console.log("AddCourseCategory Response:", newCategory);
             }
             handleClose();
         } catch (error) {
             setError(error.message);
+            toast.error("Error updating/adding course category.");
             console.error("Add/Update Course Category Error:", error);
+        } finally {
+            setLoading(false); // Stop loading after submitting
         }
     };
 
     const handleDelete = async (courseCategoryID) => {
+        setLoading(true); // Start loading when deleting
         try {
             await deleteCourseCategory(courseCategoryID);
             setData(data.filter((category) => category.courseCategoryID !== courseCategoryID));
+            toast.success("Course category deleted successfully!");
         } catch (error) {
             setError(error.message);
+            toast.error("Error deleting course category.");
             console.error("DeleteCourseCategory Error:", error);
+        } finally {
+            setLoading(false); // Stop loading after deleting
         }
     };
 
@@ -91,6 +105,7 @@ const CourseCategory = () => {
 
     useEffect(() => {
         const fetchData = async () => {
+            setLoading(true); // Start loading when fetching data
             try {
                 const categories = await getAllCourseCategories();
                 setData(categories);
@@ -98,14 +113,22 @@ const CourseCategory = () => {
             } catch (error) {
                 setError(error.message);
                 console.error("GetAllAdminCourseCategory Error:", error);
+            } finally {
+                setLoading(false); // Stop loading after fetching data
             }
         };
         fetchData();
     }, [retrievedToken]);
 
+    if (loading) {
+        return <Loader />;
+    }
+
     if (error) {
         return <div>Error: {error}</div>;
     }
+
+
 
     return (
         <div className="">
@@ -123,7 +146,7 @@ const CourseCategory = () => {
                                 <div>
                                     <h3>Course Category</h3>
                                 </div>
-
+                                <ToastContainer/>
                                 <div className="Add-btn">
                                     <Button variant="primary" onClick={handleShow}>
                                         Category Add
@@ -141,6 +164,7 @@ const CourseCategory = () => {
                                 <Card.Img
                                     variant="top"
                                     src={category.courseCategoryImage}
+                                    style={{width:"229px",height:"152px"}}
                                     alt={category.courseCategoryName}
                                     onError={(e) => (e.target.src = "placeholder-image-url")}
                                 />

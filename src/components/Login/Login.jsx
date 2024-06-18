@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Login.css'
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 const Login = () => {
     const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
@@ -63,10 +63,16 @@ const Login = () => {
                                             <input type="password" className='form-control' placeholder='Enter your password' name="password" value={data.password} onChange={handleChange} required aria-invalid="false" />
                                         </div>
                                         <div className="login-btn mb-3">
-                                            <button id="login" className="login-button" type="submit"> Login 📫 </button>  
+                                            <button id="login" className="login-button" type="submit"> Login  </button>
+                                            
                                         </div>
                                     </form> 
+                                    
                                 </div>
+
+                           <div style={{display:"flex",justifyContent:"s"}}>
+                           <Link to="/SingUp" >SingUp</Link>
+                           </div>
                             </div>
                         </div>
                     </div>

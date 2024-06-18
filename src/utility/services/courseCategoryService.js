@@ -1,7 +1,5 @@
 import axiosInstance from "../axiosInstance";
 
-
-
 const courseData  = () => ({
   courseCategoryID: 0,
   courseCategoryName: "",

@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { Card, Container, Row, Col } from "react-bootstrap";
-import { useAuth } from "AuthProvider ";
 import axiosInstance from "utility/axiosInstance";
 
+import { Card, Container, Row, Col } from "react-bootstrap";
+import Loader from "components/Loader/Loader"; // Adjust the path as necessary
+import { useAuth } from "AuthProvider ";
+
 function Dashboard() {
-  
   const { retrievedToken } = useAuth();
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true); // State for loading
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,11 +20,16 @@ function Dashboard() {
       } catch (error) {
         setError('Failed to fetch user data. Please try again.');
         console.error("GetDashboard Error:", error);
+      } finally {
+        setLoading(false); // Stop loading after fetching data
       }
     };
     fetchData();
   }, [retrievedToken]);
-  
+
+  if (loading) {
+    return <Loader />;
+  }
 
   if (error) {
     return <div>Error: {error}</div>;

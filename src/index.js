@@ -45,6 +45,8 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import AdminLayout from "layouts/Admin.js";
 import Login from "components/Login/Login";
 import { AuthProvider } from "AuthProvider ";
+import Loader from "components/Loader/Loader";
+import SingUp from "components/SingUp/SingUp";
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -54,11 +56,13 @@ root.render(
   <BrowserRouter>
     <Switch>
       <Route path="/Login" component={Login} />
+      <Route path="/SingUp" component={SingUp} />
       {token ? (
         <>
         <AuthProvider>
           <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
-          <Redirect from="/" to="/admin/dashboard" />
+          <Redirect from="/" to="/admin/admin/dashboard" />
+          <Route path="/Loader" element={<Loader/>}/>
           </AuthProvider>
         </>
       ) : (
